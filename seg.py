@@ -17,7 +17,7 @@ def create_output_dirs(output_dir, num_dirs):
         os.makedirs(os.path.join(output_dir, str(i)), exist_ok=True)
 
 
-def distribute_images(image_paths, output_dir, num_dirs=7):
+def distribute_images(image_paths, output_dir, num_dirs=3):
     random.shuffle(image_paths)
     chunk_size = len(image_paths) // num_dirs
     chunks = [image_paths[i * chunk_size:(i + 1) * chunk_size] for i in range(num_dirs)]
@@ -36,6 +36,7 @@ def distribute_images(image_paths, output_dir, num_dirs=7):
 
 
 def main():
+    group_num=3
     # Use os.getcwd() to get the current working directory
     project_dir = os.getcwd()
     data_dir = os.path.join(project_dir, 'data')
@@ -46,11 +47,11 @@ def main():
     print(f"Collected {len(image_paths)} images from {data_dir}")
 
     # Step 2: Create output directories
-    create_output_dirs(output_dir, 7)
+    create_output_dirs(output_dir, group_num)
     print(f"Created output directories in {output_dir}")
 
     # Step 3: Distribute images into 7 directories
-    chunks = distribute_images(image_paths, output_dir, num_dirs=7)
+    chunks = distribute_images(image_paths, output_dir, num_dirs=group_num)
 
     for i, chunk in enumerate(chunks):
         print(f"Chunk {i} has {len(chunk)} images.")
